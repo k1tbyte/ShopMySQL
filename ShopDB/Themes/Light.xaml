@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Background Brushes -->
+    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="#EDF4FF"/>
+    <SolidColorBrush x:Key="SecundaryBackgroundBrush" Color="#ced6f0"/>
+    <SolidColorBrush x:Key="TertiaryBackgroundBrush" Color="#FFFFFF"/>
+    
+    <!-- Typograhy Brushes -->
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#455064"/>
+    <SolidColorBrush x:Key="SecundaryTextBrush" Color="#102341"/>
+    <SolidColorBrush x:Key="TertiaryTextBrush" Color="#1C3254"/>
+
+    <!-- Blue Brushes-->
+    <SolidColorBrush x:Key="PrimaryBlueBrush" Color="#004FC4"/>
+    <SolidColorBrush x:Key="SecundaryBlueBrush" Color="#2787cc"/>
+    <SolidColorBrush x:Key="TertiaryBlueBrush" Color="#5B8DEF"/>
+
+    <!-- Shadow colors -->
+    <Color x:Key="PrimaryGlowColor">#2787cc</Color>
+    <Color x:Key="SecundaryGlowColor">#FFFFFF</Color>
+</ResourceDictionary>

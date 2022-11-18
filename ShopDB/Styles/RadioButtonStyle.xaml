@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="MenuRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Height" Value="42"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="10 0 0 0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid>
+
+                        <!-- Selected  -->
+                        <Border x:Name="btnSelected" Background="Transparent"
+                                        Opacity="0.9"
+                                        CornerRadius="15" Width="{TemplateBinding Width}"
+                                        >
+
+                        </Border>
+
+
+                        <!-- Indicator -->
+                        <Ellipse x:Name="Indicator"
+                 Width="28" StrokeThickness="5" Fill="Transparent" 
+                 Height="28" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Ellipse.Clip>
+                                <RectangleGeometry Rect="0,0,24,24"/>
+                            </Ellipse.Clip>
+                            <Ellipse.RenderTransform>
+                                <RotateTransform Angle="135"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+
+                        <!-- Content -->
+                        <ContentPresenter  HorizontalAlignment="Left"
+                                           VerticalAlignment="Center" Margin="25 0  0 0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource SecundaryBlueBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="btnSelected" Property="Background" Value="{DynamicResource SecundaryBlueBrush}"/>
+                            <Setter  Property="Foreground" Value="{DynamicResource TertiaryBackgroundBrush}"/>
+                            <Setter TargetName="Indicator" Property="Stroke" Value="{DynamicResource PrimaryBackgroundBrush}"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="Indicator"
+                                        Storyboard.TargetProperty="Margin"
+                                                     From="0 15 0 -10"  To="19 15 0 -10" Duration="0:0:0.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

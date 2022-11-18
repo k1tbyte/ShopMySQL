@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="ShopDB.MVVM.View.Pages.CatalogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShopDB.MVVM.View.Pages"
+             xmlns:viewmodels="clr-namespace:ShopDB.MVVM.ViewModels" 
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewmodels:CatalogViewModel}"
+             d:DesignHeight="550" d:DesignWidth="660">
+    <Grid>
+        <ListBox x:Name="games" ItemsSource="{Binding  Products,UpdateSourceTrigger=PropertyChanged}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Left" 
+                     Margin="9,10,0,10" Background="Transparent"
+                     VirtualizingPanel.IsVirtualizing="True"  BorderThickness="0"
+                     VirtualizingPanel.VirtualizationMode="Recycling"
+                     ItemContainerStyle="{StaticResource base_listboxItem}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid MaxWidth="145" Margin="6">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border Name="Mask"
+                        Background="White"
+                        BorderThickness="1"
+                        CornerRadius="13"/>
+                            <StackPanel  Cursor="Hand">
+                                <Image ToolTipService.Placement="Top" Height="130" Width="130" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding Image}"
+                                                     CacheOption="OnLoad"
+                                                     DecodePixelHeight="200"/>
+                                    </Image.Source>
+                                    <Image.ToolTip>
+                                        <ToolTip>
+                                            <TextBlock MaxWidth="400" TextWrapping="Wrap" Text="{Binding Description}"/>
+                                        </ToolTip>
+                                    </Image.ToolTip>
+                                </Image>
+                                <TextBox Text="{Binding Name}"
+                                HorizontalAlignment="Center" BorderThickness="0"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryTextBrush}" IsReadOnly="True" 
+                                Margin="3 4 3 3" FontFamily="Poppins"/>
+
+                                <StackPanel Orientation="Horizontal"  Margin="8 0 0 0" Opacity="0.8" >
+                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Amount: " FontFamily="Poppins"/>
+                                    <TextBlock Text="{Binding Amount}"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Margin="8 0 0 10" Opacity="0.8" >
+                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Price: " FontFamily="Poppins"/>
+                                    <TextBlock Text="{Binding Price}"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
+                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="₴" Margin="3 0 0 0"/>
+                                </StackPanel>
+
+                                <StackPanel.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                                </StackPanel.OpacityMask>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
