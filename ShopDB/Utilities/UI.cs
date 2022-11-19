@@ -12,7 +12,7 @@ namespace ShopDB.Utilities
         public static bool? OpenWindow(object obj)
         {
             var window = obj as Window;
-            window.Owner = App.Current.MainWindow;
+            window.Owner = App.Current?.MainWindow ?? null;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             return window.ShowDialog();
         }

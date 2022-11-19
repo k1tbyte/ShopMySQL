@@ -30,8 +30,7 @@ namespace ShopDB.MVVM.ViewModels
         {
             Products = new ObservableCollection<Product>();
 
-            if(Utilities.SQL.Connect("datasource=127.0.0.1;port=3306;username=root;password=;database=electronics_store") == Utilities.SQLResponse.Success &&
-                Utilities.SQL.ExecuteCommand("SELECT * FROM `product`",true) == Utilities.SQLResponse.Success)
+            if(Utilities.SQL.ExecuteCommand("SELECT * FROM `product`",true) == Utilities.SQLResponse.Success)
             {
                 while (Utilities.SQL.MySqlReader.Read())
                 {

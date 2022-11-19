@@ -100,6 +100,10 @@
     <Compile Include="MVVM\View\Windows\AddEditProductWindow.xaml.cs">
       <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\Windows\AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\Main.cs" />
     <Compile Include="Utilities\SQL.cs" />
     <Compile Include="Utilities\UI.cs" />
     <Compile Include="Utilities\WinAPI.cs" />
@@ -117,6 +121,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MVVM\View\Windows\AddEditProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Windows\AuthWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

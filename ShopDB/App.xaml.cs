@@ -20,10 +20,19 @@ namespace ShopDB
         {
             try
             {
-
                 Config.Load();
+                if(Utilities.SQL.Connect("datasource=127.0.0.1;port=3306;username=root;password=;database=electronics_store") != Utilities.SQLResponse.Success)
+                {
+                    System.Windows.Forms.MessageBox.Show("Database connection failed!");
+                    App.Current.Shutdown();
+                }
+                    
+                new AuthWindow()
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                }.Show();
 
-                new MainWindow().Show();
+             //   new MainWindow().Show();
             }
             catch(Exception ex)
             {

@@ -77,15 +77,13 @@ namespace ShopDB.Utilities
                     CommandTimeout = 10
                 };
 
+                if (MySqlReader?.IsClosed == false)
+                    MySqlReader.Close();
 
                 if (buffered)
                 {
-                    var reader = сommandToExec.ExecuteReader();
 
-                    if (reader.HasRows)
-                    {
-                        MySqlReader = reader;
-                    }
+                    MySqlReader = сommandToExec.ExecuteReader();
                 }
                 else
                 {
@@ -95,6 +93,39 @@ namespace ShopDB.Utilities
 
             }
             catch(Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.ToString());
+                return SQLResponse.Error;
+            }
+
+            return SQLResponse.Success;
+        }
+
+        public static SQLResponse ExecuteCommand(MySqlCommand command, bool buffered = false)
+        {
+            try
+            {
+                if (Connection == null)
+                    return SQLResponse.ErrorConnectionNotCreated;
+
+                if (Connection.State == System.Data.ConnectionState.Closed)
+                    return SQLResponse.AlreadyClosed;
+
+                if (MySqlReader?.IsClosed == false)
+                    MySqlReader.Close();
+
+                if (buffered)
+                {
+                    MySqlReader = command.ExecuteReader();
+                }
+                else
+                {
+                    command.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show(e.ToString());
                 return SQLResponse.Error;
