@@ -59,6 +59,18 @@ namespace ShopDB.MVVM.ViewModels
 
         #endregion
 
+        public static event EventHandler AuthenticatedUserChanged;
+        private static string _authenticatedUser;
+        public static string AuthenticatedUser
+        {
+            get { return _authenticatedUser; }
+            set
+            {
+                _authenticatedUser = value;
+                AuthenticatedUserChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+
         public readonly CatalogViewModel CatalogVM;
 
 
@@ -91,7 +103,7 @@ namespace ShopDB.MVVM.ViewModels
 
             AddProductCommand = new RelayCommand(o =>
             {
-                if(Utilities.UI.OpenWindow(new AddEditProductWindow()) == true)
+                if(Utilities.UI.OpenDialogWindow(new AddEditProductWindow()) == true)
                 {
 
                 }

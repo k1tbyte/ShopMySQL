@@ -287,13 +287,20 @@
 
 
 
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 20">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 20" Grid.Row="1">
                 <!--              <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}" Background="{DynamicResource SecundaryBlueBrush}">
                     <materialDesign:PackIcon Kind="WbSunny" Foreground="Orange" Opacity="0.6"/>
                 </RadioButton>
                 <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}"  Background="{DynamicResource SecundaryBlueBrush}" Margin="55 0 0 0">
                     <materialDesign:PackIcon Kind="WeatherNight" Foreground="Blue" Opacity="0.8"/>
                 </RadioButton>-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Hello, " FontFamily="Poppins" FontSize="14"
+                           Foreground="{DynamicResource PrimaryTextBrush}"/>
+                    <TextBlock Text="{Binding AuthenticatedUser,StringFormat={}{0}!}" FontFamily="Poppins" FontSize="14"
+                           Foreground="{DynamicResource SecundaryBlueBrush}"/>
+                </StackPanel>
+
             </Grid>
             
             <!--#endregion-->

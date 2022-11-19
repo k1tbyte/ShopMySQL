@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using ShopDB.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,9 +77,30 @@ namespace ShopDB.MVVM.View.Windows
 
             if(IsNullOrWhiteSpaceCollection(collection))
             {
-                System.Windows.Forms.MessageBox.Show("Not all fields are completed or fields contain spaces");
+                errorBlock.Text = "Not all fields are completed or fields contain spaces";
                 return;
-            }    
+            }
+
+            if (Utilities.SQL.ExecuteCommand($"SELECT * FROM user WHERE login = '{lloginField.Text}'", true) == Utilities.SQLResponse.Success)
+            {
+                Utilities.SQL.MySqlReader.Read();
+                if (!Utilities.SQL.MySqlReader.HasRows)
+                {
+                    errorBlock.Text = "This user was not found";
+                    return;
+                }
+
+                if (Utilities.SQL.MySqlReader.GetFieldValue<string>(4) != Utilities.Main.Sha256(lpassField.Password))
+                {
+                    errorBlock.Text = "Invalid password!";
+                    return;
+                }
+
+                Utilities.UI.OpenWindow(new MainWindow());
+                MainWindowViewModel.AuthenticatedUser = lloginField.Text;
+                this.Close();
+
+            }
                 
         }
 
@@ -122,11 +144,10 @@ namespace ShopDB.MVVM.View.Windows
             var insertCommand = $"INSERT INTO `user` (`id`, `acess_level`, `username`, `login`, `password`, `email`, `address`, `first_name`, `last_name`, `phone_number`) VALUES" +
                 $"(NULL,'user','{usernameField.Text}','{loginField.Text}','{passHash}',{email},{address},'{firstNameField.Text}','{lastNameField.Text}',{phone})";
 
-
-
             if(Utilities.SQL.ExecuteCommand(insertCommand) == Utilities.SQLResponse.Success)
             {
-                new MainWindow().Show();
+                Utilities.UI.OpenWindow(new MainWindow());
+                MainWindowViewModel.AuthenticatedUser = loginField.Text;
                 this.Close();
             }
 

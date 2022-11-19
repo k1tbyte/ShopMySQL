@@ -50,7 +50,7 @@ namespace ShopDB.MVVM.ViewModels
             EditProductComamnd = new RelayCommand(o =>
             {
                 var prod = o as Product;
-                if (Utilities.UI.OpenWindow(new AddEditProductWindow(prod)) == true)
+                if (Utilities.UI.OpenDialogWindow(new AddEditProductWindow(prod)) == true)
                 {
                     Products[Products.IndexOf(prod)] = new Product()
                     {
