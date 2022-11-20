@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Utilities\Main.cs" />
     <Compile Include="Utilities\SQL.cs" />
+    <Compile Include="Utilities\StrHelper.cs" />
     <Compile Include="Utilities\UI.cs" />
     <Compile Include="Utilities\WinAPI.cs" />
     <Compile Include="App.xaml.cs">

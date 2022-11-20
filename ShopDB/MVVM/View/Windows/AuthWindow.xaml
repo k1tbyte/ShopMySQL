@@ -19,6 +19,38 @@
                 <RowDefinition Height="36"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
+            <Popup x:Name="Popup" Grid.Column="1" AllowsTransparency="True"
+                       HorizontalOffset="0" VerticalOffset="10">
+                <Border Grid.Row="1" Background="{DynamicResource SecundaryBackgroundBrush}" Opacity="0.95"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="5">
+                    <StackPanel Margin="8" >
+
+
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Check" Margin="0 0 5 0" Foreground="{Binding ElementName=CharsLenPass,Path=Foreground}"/>
+                            <TextBlock x:Name="CharsLenPass" Text="Must be atleast 8 characters" FontFamily="Poppins" Foreground="PaleVioletRed"/>
+                        </DockPanel>
+
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Check" Margin="0 0 5 0" Foreground="{Binding ElementName=UpperContPass,Path=Foreground}"/>
+                            <TextBlock x:Name="UpperContPass" Text="Must be contain 1 uppercase character" FontFamily="Poppins" Foreground="PaleVioletRed"/>
+                        </DockPanel>
+
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Check" Margin="0 0 5 0" Foreground="{Binding ElementName=LowerContPass,Path=Foreground}"/>
+                            <TextBlock x:Name="LowerContPass" Text="Must be contain 1 lowercase character" FontFamily="Poppins" Foreground="PaleVioletRed"/>
+                        </DockPanel>
+
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Check" Margin="0 0 5 0" Foreground="{Binding ElementName=NumberContPass,Path=Foreground}"/>
+                            <TextBlock x:Name="NumberContPass" Text="Must be contain 1 number" FontFamily="Poppins" Foreground="PaleVioletRed"/>
+                        </DockPanel>
+
+                    </StackPanel>
+                </Border>
+            </Popup>
+            
             <TextBlock x:Name="Title" Text="Sign in" FontSize="20" FontFamily="Poppins" Margin="15 7 0  0"
                            Foreground="{DynamicResource PrimaryTextBrush}"/>
 
@@ -34,7 +66,7 @@
                     <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.3"/>
                 </Rectangle.Effect>
             </Rectangle>
-
+            
             <StackPanel Grid.Row="1" Margin="10">
                 <StackPanel x:Name="LoginPanel">
                     <TextBox x:Name="lloginField" FontSize="14" materialDesign:HintAssist.Hint="Enter login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="32"/>
@@ -42,8 +74,11 @@
                 </StackPanel>
 
                 <StackPanel x:Name="SignUpPanel" Visibility="Collapsed">
-                    <TextBox x:Name="loginField" FontSize="14" materialDesign:HintAssist.Hint="Enter login (!)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="32"/>
-                    <PasswordBox x:Name="passField" FontSize="14" materialDesign:HintAssist.Hint="Enter password (!)" Margin="0 0 0 10" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                    <TextBox x:Name="loginField" FontSize="14" materialDesign:HintAssist.Hint="Enter login (!)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="32"
+                             PreviewTextInput="loginField_PreviewTextInput"/>
+                    <PasswordBox x:Name="passField" GotFocus="passField_GotFocus" LostFocus="passField_LostFocus" PasswordChanged="passField_PasswordChanged"
+                                 FontSize="14" materialDesign:HintAssist.Hint="Enter password (!)" Margin="0 0 0 10" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+
                     <TextBox x:Name="usernameField" FontSize="14" materialDesign:HintAssist.Hint="Enter username (!)"     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="32"/>
                     <TextBox x:Name="emailField" FontSize="14" materialDesign:HintAssist.Hint="Enter email"        Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="64"/>
                     <TextBox x:Name="addressField" FontSize="14" materialDesign:HintAssist.Hint="Enter address"      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="127"/>
@@ -62,6 +97,8 @@
 
             <TextBlock x:Name="errorBlock" Text="" VerticalAlignment="Bottom" Grid.Row="1" Margin="10 0 0 53"
                            FontSize="11" Foreground="PaleVioletRed"/>
+
+
         </Grid>
     </Border>
 </Window>

@@ -1,9 +1,12 @@
 ﻿using MySqlConnector;
 using ShopDB.MVVM.ViewModels;
+using ShopDB.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +24,8 @@ namespace ShopDB.MVVM.View.Windows
     /// </summary>
     public partial class AuthWindow : Window
     {
+        bool IsUpperContain = false, IsLowerContain = false, IsDigitContain = false;
+
         public AuthWindow()
         {
             InitializeComponent();
@@ -33,6 +38,7 @@ namespace ShopDB.MVVM.View.Windows
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if(Popup.IsOpen) Popup.IsOpen= false;
             this.DragMove();
         }
 
@@ -75,7 +81,7 @@ namespace ShopDB.MVVM.View.Windows
                 lpassField.Password
             };
 
-            if(IsNullOrWhiteSpaceCollection(collection))
+            if(Utilities.StrHelper.IsNullOrWhiteSpaceCollection(collection))
             {
                 errorBlock.Text = "Not all fields are completed or fields contain spaces";
                 return;
@@ -110,13 +116,12 @@ namespace ShopDB.MVVM.View.Windows
             var collection = new List<string>()
             {
                 loginField.Text,
-                passField.Password,
                 usernameField.Text,
                 firstNameField.Text,
                 lastNameField.Text,
             };
 
-            if (IsNullOrWhiteSpaceCollection(collection))
+            if (Utilities.StrHelper.IsNullOrWhiteSpaceCollection(collection))
             {
                 errorBlock.Text = "Not all fields are completed or fields contain spaces";
                 return;
@@ -153,29 +158,88 @@ namespace ShopDB.MVVM.View.Windows
 
         }
 
-        private bool IsNullOrWhiteSpaceCollection(List<string> collection)
-        {
-            foreach (var item in collection)
-            {
-                if (String.IsNullOrEmpty(item) || item.Contains(' ')) return true;
-            }
-            return false;
-        }
 
         private bool IsFieldsValid()
         {
             errorBlock.Text = String.Empty;
             if (loginField.Text.Length < 4)
                 errorBlock.Text = "Login cannot be less than 4 characters";
-            else if(passField.Password.Length < 8)
-                errorBlock.Text = "Password cannot be less than 8 characters";
+            else if(!IsUpperContain || !IsLowerContain || !IsDigitContain)
+                errorBlock.Text = "Password does not meet the requirements!";
             return String.IsNullOrEmpty(errorBlock.Text);
         }
 
         private void phoneField_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key < Key.D0 || e.Key > Key.D9) && e.Key != Key.Right && e.Key != Key.Left && e.Key != Key.Delete && e.Key != Key.Back)
+            if (((e.Key < Key.D0 || e.Key > Key.D9 ) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9))
+                && e.Key != Key.Right && e.Key != Key.Left && e.Key != Key.Delete && e.Key != Key.Back && e.Key != Key.NumLock)
+            {
                 e.Handled = true;
+                return;
+            }
+            
+            
+        }
+
+        private void passField_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Popup.PlacementTarget = passField;
+            Popup.Placement = System.Windows.Controls.Primitives.PlacementMode.Right;
+            Popup.IsOpen = true;
+        }
+
+        private void loginField_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Z0-9]+$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void passField_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Popup.IsOpen = false;
+        }
+
+        private void passField_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            IsUpperContain = IsLowerContain = IsDigitContain = false;
+
+            if (passField.Password.Length > 8)
+            {
+                CharsLenPass.Foreground = Brushes.Green;
+            }
+            else
+            {
+                CharsLenPass.Foreground = Brushes.PaleVioletRed;
+            }
+                
+
+            foreach (var item in passField.Password)
+            {
+                if (char.IsDigit(item) && !IsDigitContain)
+                {
+                    IsDigitContain = true;
+                    NumberContPass.Foreground = Brushes.Green;
+                }
+                else if (char.IsLower(item) && !IsLowerContain)
+                {
+                    IsLowerContain = true;
+                    LowerContPass.Foreground = Brushes.Green;
+                }
+                else if (char.IsUpper(item) && !IsUpperContain)
+                {
+                    IsUpperContain = true;
+                    UpperContPass.Foreground = Brushes.Green;
+                }
+                    
+            }
+
+            if (!IsLowerContain)
+                LowerContPass.Foreground = Brushes.PaleVioletRed;
+            if (!IsUpperContain)
+                UpperContPass.Foreground = Brushes.PaleVioletRed;
+            if (!IsDigitContain)
+                NumberContPass.Foreground = Brushes.PaleVioletRed;
+
         }
     }
 }
