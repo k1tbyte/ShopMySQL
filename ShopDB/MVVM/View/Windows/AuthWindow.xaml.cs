@@ -150,11 +150,11 @@ namespace ShopDB.MVVM.View.Windows
             var insertCommand = $"INSERT INTO `user` (`id`, `acess_level`, `username`, `login`, `password`, `email`, `address`, `first_name`, `last_name`, `phone_number`) VALUES" +
                 $"(NULL,'user','{usernameField.Text}','{loginField.Text}','{passHash}',{email},{address},'{firstNameField.Text}','{lastNameField.Text}',{phone})";
 
-            if(SQL.ExecuteCommand(insertCommand) == SQLResponse.Success)
+            if(SQL.ExecuteCommand(insertCommand) == SQLResponse.Success && SQL.ExecuteCommand($"SELECT * FROM user WHERE login = '{loginField.Text}'", true) == SQLResponse.Success)
             {
                 MainWindowViewModel.AuthenticatedUser = new Models.LoggedUser()
                 {
-                    AcessLevel = SQL.MySqlReader.GetFieldValue<string>(1) == "user" ? Models.AcessLevel.User : Models.AcessLevel.Admin,
+                    AcessLevel =  Models.AcessLevel.User,
                     Id = SQL.MySqlReader.GetFieldValue<uint>(0),
                     Login = loginField.Text,
                     Username = SQL.MySqlReader.GetFieldValue<string>(2),
