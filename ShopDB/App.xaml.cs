@@ -15,7 +15,7 @@ namespace ShopDB
     {
         private static readonly Mutex Mutex = new Mutex(true, "ShopDB");
         public static string WorkingDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+        public static new MainWindow MainWindow { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             try

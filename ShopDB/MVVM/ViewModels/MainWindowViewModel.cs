@@ -55,13 +55,14 @@ namespace ShopDB.MVVM.ViewModels
         public RelayCommand MinimizeAppCommand { get; } 
         public RelayCommand MaximizeAppCommand { get; }
         public RelayCommand CatalogViewCommand { get; }
-        public RelayCommand AddProductCommand { get; }
+        public RelayCommand AddProductCommand  { get; }
+        public RelayCommand LogoutCommand      { get; }
 
         #endregion
 
         public static event EventHandler AuthenticatedUserChanged;
-        private static string _authenticatedUser;
-        public static string AuthenticatedUser
+        private static LoggedUser _authenticatedUser;
+        public static LoggedUser AuthenticatedUser
         {
             get { return _authenticatedUser; }
             set
@@ -107,6 +108,14 @@ namespace ShopDB.MVVM.ViewModels
                 {
 
                 }
+            });
+
+            LogoutCommand = new RelayCommand(o =>
+            {
+                App.MainWindow.Hide();
+                Utilities.UI.OpenWindow(new AuthWindow());
+                MainWindowViewModel.AuthenticatedUser = null;
+
             });
             
         }

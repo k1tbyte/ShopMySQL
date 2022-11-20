@@ -1,21 +1,11 @@
-﻿using MySqlConnector;
-using ShopDB.MVVM.ViewModels;
+﻿using ShopDB.MVVM.ViewModels;
 using ShopDB.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShopDB.MVVM.View.Windows
 {
@@ -25,6 +15,7 @@ namespace ShopDB.MVVM.View.Windows
     public partial class AuthWindow : Window
     {
         bool IsUpperContain = false, IsLowerContain = false, IsDigitContain = false;
+        Regex regex = new Regex("^[a-zA-Z0-9]+$");
 
         public AuthWindow()
         {
@@ -33,7 +24,7 @@ namespace ShopDB.MVVM.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            App.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -81,29 +72,39 @@ namespace ShopDB.MVVM.View.Windows
                 lpassField.Password
             };
 
-            if(Utilities.StrHelper.IsNullOrWhiteSpaceCollection(collection))
+            if(StrHelper.IsNullOrWhiteSpaceCollection(collection))
             {
                 errorBlock.Text = "Not all fields are completed or fields contain spaces";
                 return;
             }
 
-            if (Utilities.SQL.ExecuteCommand($"SELECT * FROM user WHERE login = '{lloginField.Text}'", true) == Utilities.SQLResponse.Success)
+            if (SQL.ExecuteCommand($"SELECT * FROM user WHERE login = '{lloginField.Text}'", true) == SQLResponse.Success)
             {
-                Utilities.SQL.MySqlReader.Read();
-                if (!Utilities.SQL.MySqlReader.HasRows)
+                SQL.MySqlReader.Read();
+                if (!SQL.MySqlReader.HasRows)
                 {
                     errorBlock.Text = "This user was not found";
                     return;
                 }
 
-                if (Utilities.SQL.MySqlReader.GetFieldValue<string>(4) != Utilities.Main.Sha256(lpassField.Password))
+                if (SQL.MySqlReader.GetFieldValue<string>(4) != Main.Sha256(lpassField.Password))
                 {
                     errorBlock.Text = "Invalid password!";
                     return;
                 }
 
-                Utilities.UI.OpenWindow(new MainWindow());
-                MainWindowViewModel.AuthenticatedUser = lloginField.Text;
+                MainWindowViewModel.AuthenticatedUser = new Models.LoggedUser()
+                {
+                    AcessLevel = SQL.MySqlReader.GetFieldValue<string>(1) == "user" ? Models.AcessLevel.User : Models.AcessLevel.Admin,
+                    Id = SQL.MySqlReader.GetFieldValue<uint>(0),
+                    Login = lloginField.Text,
+                    Username = SQL.MySqlReader.GetFieldValue<string>(2),
+                };
+
+                if (App.MainWindow == null)
+                    UI.OpenWindow(App.MainWindow = new MainWindow());
+                else
+                    App.MainWindow.Show();
                 this.Close();
 
             }
@@ -121,7 +122,7 @@ namespace ShopDB.MVVM.View.Windows
                 lastNameField.Text,
             };
 
-            if (Utilities.StrHelper.IsNullOrWhiteSpaceCollection(collection))
+            if (StrHelper.IsNullOrWhiteSpaceCollection(collection))
             {
                 errorBlock.Text = "Not all fields are completed or fields contain spaces";
                 return;
@@ -131,17 +132,17 @@ namespace ShopDB.MVVM.View.Windows
 
             var checkCommand = $"SELECT * FROM user WHERE login = '{loginField.Text}'";
 
-            if (Utilities.SQL.ExecuteCommand(checkCommand, true) != Utilities.SQLResponse.Success)
+            if (SQL.ExecuteCommand(checkCommand, true) != SQLResponse.Success)
                 return;
 
-            Utilities.SQL.MySqlReader.Read();
-            if (Utilities.SQL.MySqlReader.HasRows)
+            SQL.MySqlReader.Read();
+            if (SQL.MySqlReader.HasRows)
             {
                 errorBlock.Text = "User with this login already exists";
                 return;
             }
 
-            var passHash = Utilities.Main.Sha256(passField.Password);
+            var passHash = Main.Sha256(passField.Password);
             var email = String.IsNullOrEmpty(emailField.Text) ? "NULL" : $"'{emailField.Text}'" ;
             var address = String.IsNullOrEmpty(addressField.Text) ? "NULL" : $"'{addressField.Text}'";
             var phone = String.IsNullOrEmpty(phoneField.Text) ? "NULL" : $"'{phoneField.Text}'";
@@ -149,10 +150,19 @@ namespace ShopDB.MVVM.View.Windows
             var insertCommand = $"INSERT INTO `user` (`id`, `acess_level`, `username`, `login`, `password`, `email`, `address`, `first_name`, `last_name`, `phone_number`) VALUES" +
                 $"(NULL,'user','{usernameField.Text}','{loginField.Text}','{passHash}',{email},{address},'{firstNameField.Text}','{lastNameField.Text}',{phone})";
 
-            if(Utilities.SQL.ExecuteCommand(insertCommand) == Utilities.SQLResponse.Success)
+            if(SQL.ExecuteCommand(insertCommand) == SQLResponse.Success)
             {
-                Utilities.UI.OpenWindow(new MainWindow());
-                MainWindowViewModel.AuthenticatedUser = loginField.Text;
+                MainWindowViewModel.AuthenticatedUser = new Models.LoggedUser()
+                {
+                    AcessLevel = SQL.MySqlReader.GetFieldValue<string>(1) == "user" ? Models.AcessLevel.User : Models.AcessLevel.Admin,
+                    Id = SQL.MySqlReader.GetFieldValue<uint>(0),
+                    Login = loginField.Text,
+                    Username = SQL.MySqlReader.GetFieldValue<string>(2),
+                };
+                if (App.MainWindow == null)
+                    UI.OpenWindow(App.MainWindow = new MainWindow());
+                else
+                    App.MainWindow.Show();
                 this.Close();
             }
 
@@ -190,7 +200,6 @@ namespace ShopDB.MVVM.View.Windows
 
         private void loginField_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("^[a-zA-Z0-9]+$");
             e.Handled = !regex.IsMatch(e.Text);
         }
 

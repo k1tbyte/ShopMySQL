@@ -31,7 +31,7 @@
 
 
 
-        <Style x:Key="MenuField" TargetType="{x:Type StackPanel}">
+        <Style x:Key="MenuField" TargetType="{x:Type DockPanel}">
             <Setter Property="MaxWidth" Value="230"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsChecked,ElementName=MenuButton}" Value="True">
@@ -204,105 +204,121 @@
 
 
             <!--#region Left Menu -->
-            <StackPanel x:Name="Sidebar" Grid.Row="1" Style="{StaticResource MenuField}">
-
-
-                <!-- Top text -->
-                <StackPanel Orientation="Horizontal" Margin="0 -10 0 0">
-                    <Image Source="\Resources\Logo.png" Width="75" Height="62" VerticalAlignment="Top" Margin="10 0 0 0"
+            <DockPanel x:Name="Sidebar" Grid.Row="1" Style="{StaticResource MenuField}">
+                <StackPanel DockPanel.Dock="Top">
+                    <!-- Top text -->
+                    <StackPanel Orientation="Horizontal" Margin="0 -10 0 0">
+                        <Image Source="\Resources\Logo.png" Width="75" Height="62" VerticalAlignment="Top" Margin="10 0 0 0"
                        Stretch="Fill" HorizontalAlignment="Left">
-                        <Image.Effect>
-                            <DropShadowEffect ShadowDepth="0"
+                            <Image.Effect>
+                                <DropShadowEffect ShadowDepth="0"
                           Color="{DynamicResource PrimaryGlowColor}"
                           Opacity="1"
                           BlurRadius="3"/>
-                        </Image.Effect>
-                    </Image>
-                    <TextBlock FontFamily="Poppins" FontSize="32" FontWeight="DemiBold" LineStackingStrategy="BlockLineHeight" LineHeight="20"
+                            </Image.Effect>
+                        </Image>
+                        <TextBlock FontFamily="Poppins" FontSize="32" FontWeight="DemiBold" LineStackingStrategy="BlockLineHeight" LineHeight="20"
                                VerticalAlignment="Bottom" Margin="-13 0 0 6" Foreground="{DynamicResource SecundaryBlueBrush}"
                                Visibility="{Binding IsSidebarMinimize,Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                        <TextBlock.Effect>
-                            <DropShadowEffect ShadowDepth="0"
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0"
                           Color="{DynamicResource PrimaryGlowColor}"
                           Opacity="1"
                           BlurRadius="3"/>
-                        </TextBlock.Effect>omeshop
-                    </TextBlock>
-                </StackPanel>
+                            </TextBlock.Effect>omeshop
+                        </TextBlock>
+                    </StackPanel>
 
-                <Rectangle Fill="{DynamicResource SecundaryBackgroundBrush}" Margin="10 0 0 0" Height="0.6" Opacity="0.7" RadiusY="2" RadiusX="2" Width="220">
-                    <Rectangle.Effect>
-                        <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.3"/>
-                    </Rectangle.Effect>
-                </Rectangle>
+                    <Rectangle Fill="{DynamicResource SecundaryBackgroundBrush}" Margin="10 0 0 0" Height="0.6" Opacity="0.7" RadiusY="2" RadiusX="2" Width="220">
+                        <Rectangle.Effect>
+                            <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.3"/>
+                        </Rectangle.Effect>
+                    </Rectangle>
 
-                <TextBlock Text="Menu:" FontFamily="Poppins" Foreground="Black" Opacity="0.8"
+                    <TextBlock Text="Menu:" FontFamily="Poppins" Foreground="Black" Opacity="0.8"
                            Margin="25 10 0 0" FontSize="14"/>
 
-                <RadioButton x:Name="dashboardButton" Style="{StaticResource MenuRadioButtonStyle}" IsChecked="True" Command="{Binding CatalogViewCommand}"  >
-                    <DockPanel Width="185">
-                        <materialDesign:PackIcon Kind="Inboxes" Width="24" Height="24"/>
-                        <TextBlock Text="Catalog" Style="{StaticResource MenuTextBlock}" />
-                        <Button Style="{StaticResource CircleButton}" HorizontalAlignment="Right" Command="{Binding AddProductCommand}"
+                    <RadioButton x:Name="dashboardButton" Style="{StaticResource MenuRadioButtonStyle}" IsChecked="True" Command="{Binding CatalogViewCommand}"  >
+                        <DockPanel Width="185">
+                            <materialDesign:PackIcon Kind="Inboxes" Width="24" Height="24"/>
+                            <TextBlock Text="Catalog" Style="{StaticResource MenuTextBlock}" />
+                            <Button Style="{StaticResource CircleButton}" HorizontalAlignment="Right" Command="{Binding AddProductCommand}"
                                 Width="22" Height="22" Background="{DynamicResource SecundaryBlueBrush}" >
-                            <materialDesign:PackIcon Kind="Plus" Width="18" Height="18" Foreground="{DynamicResource TertiaryBackgroundBrush}"/>
-                            <Button.Effect>
-                                <DropShadowEffect ShadowDepth="0"  Color="{DynamicResource PrimaryGlowColor}" BlurRadius="5"/>
-                            </Button.Effect>
-                        </Button>
-                    </DockPanel>
-                </RadioButton>
+                                <materialDesign:PackIcon Kind="Plus" Width="18" Height="18" Foreground="{DynamicResource TertiaryBackgroundBrush}"/>
+                                <Button.Effect>
+                                    <DropShadowEffect ShadowDepth="0"  Color="{DynamicResource PrimaryGlowColor}" BlurRadius="5"/>
+                                </Button.Effect>
+                            </Button>
+                        </DockPanel>
+                    </RadioButton>
 
-                <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}">
-                    <DockPanel Width="185">
-                        <materialDesign:PackIcon Kind="ListBoxOutline" Width="24" Height="24"/>
-                        <TextBlock Text="My orders" Style="{StaticResource MenuTextBlock}" />
-                        
-                    </DockPanel>
-                </RadioButton>
+                    <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}">
+                        <DockPanel Width="185">
+                            <materialDesign:PackIcon Kind="ListBoxOutline" Width="24" Height="24"/>
+                            <TextBlock Text="My orders" Style="{StaticResource MenuTextBlock}" />
 
-                <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="HeartOutline" Width="24" Height="24"/>
-                        <TextBlock Text="Wishlist" Style="{StaticResource MenuTextBlock}" />
+                        </DockPanel>
+                    </RadioButton>
+
+                    <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="HeartOutline" Width="24" Height="24"/>
+                            <TextBlock Text="Wishlist" Style="{StaticResource MenuTextBlock}" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CartOutline" Width="24" Height="24"/>
+                            <TextBlock Text="Cart" Style="{StaticResource MenuTextBlock}" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TooltipQuestionOutline" Width="24" Height="24"/>
+                            <TextBlock Text="Contact us" Style="{StaticResource MenuTextBlock}" />
+                        </StackPanel>
+                    </RadioButton>
+
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="30 0 0 30" Grid.Row="1">
+                    <Button Style="{StaticResource CircleButton}"  Command="{Binding LogoutCommand}"
+                            ToolTipService.Placement="Top"
+                                Width="33" Height="33" Background="{DynamicResource SecundaryBlueBrush}" >
+                        <materialDesign:PackIcon Kind="Logout" Width="20" Height="20" Foreground="{DynamicResource TertiaryBackgroundBrush}"/>
+                        <Button.Effect>
+                            <DropShadowEffect ShadowDepth="0"  Color="{DynamicResource PrimaryGlowColor}" BlurRadius="5"/>
+                        </Button.Effect>
+                        <Button.ToolTip>
+                            <TextBlock Text="Logout"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <StackPanel VerticalAlignment="Center" Margin="10 0 0 0" Visibility="{Binding IsSidebarMinimize,Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                        <TextBlock Text="Hello, " FontFamily="Poppins" FontSize="13"
+                           Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <TextBlock Text="{Binding AuthenticatedUser.Username,StringFormat={}{0}!}" FontFamily="Poppins" FontSize="13"
+                           Foreground="{DynamicResource SecundaryBlueBrush}"  />
                     </StackPanel>
-                </RadioButton>
 
-                <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CartOutline" Width="24" Height="24"/>
-                        <TextBlock Text="Cart" Style="{StaticResource MenuTextBlock}" />
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="TooltipQuestionOutline" Width="24" Height="24"/>
-                        <TextBlock Text="Contact us" Style="{StaticResource MenuTextBlock}" />
-                    </StackPanel>
-                </RadioButton>
-
-
-            </StackPanel>
+                </StackPanel>
+            </DockPanel>
+            
 
 
 
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 20" Grid.Row="1">
+         
                 <!--              <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}" Background="{DynamicResource SecundaryBlueBrush}">
                     <materialDesign:PackIcon Kind="WbSunny" Foreground="Orange" Opacity="0.6"/>
                 </RadioButton>
                 <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}"  Background="{DynamicResource SecundaryBlueBrush}" Margin="55 0 0 0">
                     <materialDesign:PackIcon Kind="WeatherNight" Foreground="Blue" Opacity="0.8"/>
                 </RadioButton>-->
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Hello, " FontFamily="Poppins" FontSize="14"
-                           Foreground="{DynamicResource PrimaryTextBrush}"/>
-                    <TextBlock Text="{Binding AuthenticatedUser,StringFormat={}{0}!}" FontFamily="Poppins" FontSize="14"
-                           Foreground="{DynamicResource SecundaryBlueBrush}"/>
-                </StackPanel>
-
-            </Grid>
             
+
             <!--#endregion-->
 
 
