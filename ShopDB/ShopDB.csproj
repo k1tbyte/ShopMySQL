@@ -91,6 +91,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
+    <Compile Include="Converters\AcessToVisiblityConverter.cs" />
     <Compile Include="Models\LoggedUser.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="MVVM\ViewModels\AddEditProductViewModel.cs" />

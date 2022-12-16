@@ -27,12 +27,12 @@ namespace ShopDB
                     App.Current.Shutdown();
                 }
                     
-             /*   new AuthWindow()
+                new AuthWindow()
                 {
                     WindowStartupLocation = WindowStartupLocation.CenterScreen
-                }.Show();*/
+                }.Show();
 
-                new MainWindow().Show();
+               // new MainWindow().Show();
             }
             catch(Exception ex)
             {
