@@ -31,6 +31,9 @@
             <DataTemplate DataType="{x:Type viewmodels:CatalogViewModel}">
                 <viewPages:CatalogView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrdersViewModel}">
+                <viewPages:OrdersView/>
+            </DataTemplate>
         </ResourceDictionary>
         
     </Application.Resources>

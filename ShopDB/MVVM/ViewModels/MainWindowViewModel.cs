@@ -73,13 +73,14 @@ namespace ShopDB.MVVM.ViewModels
         }
 
         public readonly CatalogViewModel CatalogVM;
-
+        public readonly OrdersViewModel OrdersVM;
 
         internal MainWindowViewModel()
         {
             CatalogVM = new CatalogViewModel();
-            CurrentView = CatalogVM;
-
+            OrdersVM = new OrdersViewModel();
+            //CurrentView = CatalogVM;
+            CurrentView = OrdersVM;
 
             CloseAppCommand = new RelayCommand(o =>
             {

@@ -91,13 +91,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
-    <Compile Include="Converters\AcessToVisiblityConverter.cs" />
     <Compile Include="Models\LoggedUser.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="MVVM\ViewModels\AddEditProductViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CatalogViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\OrdersViewModel.cs" />
     <Compile Include="MVVM\View\Pages\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Pages\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Windows\AddEditProductWindow.xaml.cs">
       <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
@@ -116,6 +120,10 @@
     </Compile>
     <Compile Include="Converters\VisiblityInvertedConverter.cs" />
     <Page Include="MVVM\View\Pages\CatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Pages\OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
