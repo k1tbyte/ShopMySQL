@@ -91,7 +91,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
-    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\LoggedUser.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />

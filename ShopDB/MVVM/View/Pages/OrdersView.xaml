@@ -23,7 +23,7 @@
                      Margin="9,50,0,10" Background="Transparent"
                      VirtualizingPanel.IsVirtualizing="True"  BorderThickness="0"
                      VirtualizingPanel.VirtualizationMode="Recycling"
-                     ItemContainerStyle="{StaticResource base_listboxItem}">
+                     ItemContainerStyle="{StaticResource basicListBox}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -101,7 +101,7 @@
                             </DockPanel>
                         </Grid>
 
-                        <ListBox ItemsSource="{Binding  Items}" ItemContainerStyle="{StaticResource base_listboxItem}"
+                        <ListBox ItemsSource="{Binding  Items}" ItemContainerStyle="{StaticResource basicListBox}"
                                  Background="Transparent"  BorderThickness="0" Margin="0 0 0 0" Opacity="0.7" Visibility="{Binding ElementName=expand,Path=IsChecked,Converter={StaticResource BooleanToVisibilityConverter}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

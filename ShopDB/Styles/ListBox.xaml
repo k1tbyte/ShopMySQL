@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="base_listboxItem" TargetType="{x:Type ListBoxItem}">
+    <Style x:Key="basicListBox" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" />
@@ -22,17 +22,19 @@
                         <ContentPresenter />
                     </Grid>
 
-                  
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="productBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource basicListBox}">
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu>
                     <MenuItem Header="Add to cart" Command="{Binding PlacementTarget.Tag.AddToCartCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                              CommandParameter="{Binding}"/>
-                    <MenuItem Header="Add to wishlist" Command="{Binding PlacementTarget.Tag.AddToWishlistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                              CommandParameter="{Binding}"/>
+                              CommandParameter="{Binding}">
+                    </MenuItem>
                     <MenuItem Header="Edit" 
                               Command="{Binding PlacementTarget.Tag.EditProductComamnd, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               CommandParameter="{Binding}"/>

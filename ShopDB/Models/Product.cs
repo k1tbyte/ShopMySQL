@@ -14,5 +14,6 @@ namespace ShopDB.Models
         public int Amount { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public int Product_Id { get; set; }
     }
 }

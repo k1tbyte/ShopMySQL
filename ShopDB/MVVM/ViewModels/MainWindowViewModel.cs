@@ -101,11 +101,20 @@ namespace ShopDB.MVVM.ViewModels
 
             AddProductCommand = new RelayCommand(o =>
             {
-                if(Utilities.UI.OpenDialogWindow(new AddEditProductWindow()) == true)
+                try
                 {
-                    CatalogVM.UpdateCatalog();
+                    if (Utilities.UI.OpenDialogWindow(new AddEditProductWindow()) == true)
+                    {
+                        CatalogVM.UpdateCatalog();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.ToString());
+                }
+
             });
+
             #region Переключение вкладок
             CatalogViewCommand = new RelayCommand(o =>
             {
