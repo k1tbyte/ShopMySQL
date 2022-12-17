@@ -5,14 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ShopDB.MVVM.View.Pages"
              xmlns:viewmodels="clr-namespace:ShopDB.MVVM.ViewModels" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewmodels:OrdersViewModel}"
              d:DesignHeight="550" d:DesignWidth="660">
     <Grid>
+        <TextBlock Text="Orders" Foreground="{DynamicResource SecundaryBlueBrush}" FontFamily="Poppins"
+                   FontSize="25" Margin="12 8 0 8" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold"/>
+        <Rectangle Width="645" Margin="10 41 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Height="1" Fill="#ffff" Opacity="0.8"/>
+
+
+
         <ListBox x:Name="games" ItemsSource="{Binding  Orders,UpdateSourceTrigger=PropertyChanged}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       HorizontalAlignment="Left" 
-                     Margin="9,10,0,10" Background="Transparent"
+                     Margin="9,50,0,10" Background="Transparent"
                      VirtualizingPanel.IsVirtualizing="True"  BorderThickness="0"
                      VirtualizingPanel.VirtualizationMode="Recycling"
                      ItemContainerStyle="{StaticResource base_listboxItem}">
@@ -23,40 +31,88 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <Grid MaxWidth="145" Margin="6">
+                    <StackPanel Margin="4">
+                        <Grid Width="645" MinHeight="45" >
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Border Name="Mask"
                         Background="White"
-                        BorderThickness="1"
+                        BorderThickness="0"
                         CornerRadius="13"/>
-                            <StackPanel  Cursor="Hand">
-                                <TextBox Text="{Binding Id}"
-                                HorizontalAlignment="Center" BorderThickness="0"
+                            <DockPanel>
+                                <ToggleButton x:Name="expand"  Style="{StaticResource MaterialDesignExpandCollapseToggleStyle}" VerticalAlignment="Center" Margin="10 0 0 0"
+                                              Foreground="{DynamicResource PrimaryBlueBrush}" Cursor="Hand"/>
+
+                                <TextBox Text="{Binding Id}" VerticalAlignment="Center" BorderThickness="0"
                                 Background="Transparent" Foreground="{DynamicResource PrimaryTextBrush}" IsReadOnly="True" 
-                                Margin="3 4 3 3" FontFamily="Poppins"/>
+                                Margin="5 0 0 0" FontFamily="Poppins"/>
 
-                                <StackPanel Orientation="Horizontal"  Margin="8 0 0 0" Opacity="0.8" >
-                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Amount: " FontFamily="Poppins"/>
-                                    <TextBlock Text="{Binding TotalPrice}"
+
+
+                                <StackPanel Orientation="Horizontal"  Margin="0 0 15 0" Opacity="0.8" VerticalAlignment="Center"
+                                            DockPanel.Dock="Right">
+                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Total price: " FontFamily="Poppins"/>
+                                    <TextBlock Text="{Binding TotalPrice,StringFormat={}{0:#,# ₴}}"
                                 Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal"  Margin="8 0 0 10" Opacity="0.8" >
-                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Price: " FontFamily="Poppins"/>
-                                    <TextBlock Text="{Binding OrderStatus}"
+                                <StackPanel Margin="12 0 0 0" Opacity="0.8" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Order status: " FontFamily="Poppins"/>
+                                        <TextBlock Text="{Binding OrderStatus}"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding OrderDate}" FontSize="8" Margin="2 0 0 0"
+                                           FontFamily="Poppins" Foreground="Gray" Opacity="0.7" DockPanel.Dock="Bottom"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Margin="16 0 0 0" Opacity="0.8" VerticalAlignment="Center">
+                                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Delivery type: " FontFamily="Poppins"/>
+                                    <TextBlock Text="{Binding OrderDeliveryType}"
                                 Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
                                 </StackPanel>
 
-                                <StackPanel.OpacityMask>
+
+
+
+
+                                <DockPanel.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                                </StackPanel.OpacityMask>
-                            </StackPanel>
-
+                                </DockPanel.OpacityMask>
+                            </DockPanel>
                         </Grid>
+
+                        <ListBox ItemsSource="{Binding  Items}" ItemContainerStyle="{StaticResource base_listboxItem}"
+                                 Background="Transparent"  BorderThickness="0" Margin="0 0 0 0" Opacity="0.7" Visibility="{Binding ElementName=expand,Path=IsChecked,Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#ffff" CornerRadius="6"  Width="610" MinHeight="35">
+                                        <StackPanel Margin="7 0 3 0">
+                                            <TextBlock Text="{Binding Name}"  FontFamily="Poppins" Foreground="{DynamicResource PrimaryTextBrush}"
+                                                   VerticalAlignment="Center"/>
+                                            
+                                            <DockPanel Margin="10 0 0 3" VerticalAlignment="Center">
+                                                <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Quantity: " FontFamily="Poppins" FontSize="10"/>
+                                                <TextBlock Text="{Binding Quantity}"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins" FontSize="10"/>
+
+
+                                                <TextBlock Text="{Binding Price,StringFormat={}{0:#,# ₴}}"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins" FontSize="11" DockPanel.Dock="Right"  Margin="0 0 10 0" />
+                                                <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Price: " FontFamily="Poppins" Margin="0 0 0 0" FontSize="11" HorizontalAlignment="Right" />
+                                            </DockPanel>
+                                            
+                                        </StackPanel>
+                                    </Border>
+
+                                
+
+                                        
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

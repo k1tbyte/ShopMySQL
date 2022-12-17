@@ -57,6 +57,7 @@ namespace ShopDB.MVVM.ViewModels
         public RelayCommand CatalogViewCommand { get; }
         public RelayCommand AddProductCommand  { get; }
         public RelayCommand LogoutCommand      { get; }
+        public RelayCommand OrdersCommand      { get; }
 
         #endregion
 
@@ -79,8 +80,7 @@ namespace ShopDB.MVVM.ViewModels
         {
             CatalogVM = new CatalogViewModel();
             OrdersVM = new OrdersViewModel();
-            //CurrentView = CatalogVM;
-            CurrentView = OrdersVM;
+            CurrentView = CatalogVM;
 
             CloseAppCommand = new RelayCommand(o =>
             {
@@ -109,6 +109,12 @@ namespace ShopDB.MVVM.ViewModels
                 {
 
                 }
+            });
+
+            OrdersCommand = new RelayCommand(o =>
+            {
+                if (CurrentView != OrdersVM)
+                    CurrentView = OrdersVM;
             });
 
             LogoutCommand = new RelayCommand(o =>

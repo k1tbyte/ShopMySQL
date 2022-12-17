@@ -14,14 +14,15 @@ namespace ShopDB.Models
         public int ProductId { get; set; }
         public int Quantity { get; set; }
         public float Price { get; set; }
+        public string Name { get; set; }
     }
     public class Order
     {
         public int Id { get; set; }
-        public ulong OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        public DeliveryType OrderDeliveryType { get; set; }
+        public string OrderStatus { get; set; }
+        public string OrderDeliveryType { get; set; }
         public List<OrderItem> Items { get; set; }
     }
 }

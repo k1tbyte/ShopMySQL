@@ -26,28 +26,19 @@ namespace ShopDB.MVVM.ViewModels
             {
                 while (Utilities.SQL.MySqlReader.Read())
                 {
-                    var status = Utilities.SQL.MySqlReader.GetFieldValue<string>(3);
-                    OrderStatus ostatus = OrderStatus.canceled;
-                    if (status == "paid")
-                        ostatus = OrderStatus.paid;
-                    else if (status == "done")
-                        ostatus = OrderStatus.done;
-                    var dtype = Utilities.SQL.MySqlReader.GetFieldValue<string>(4);
-                    DeliveryType dtp = DeliveryType.none;
-                    if (dtype == "mail")
-                        dtp = DeliveryType.mail;
                     Orders.Add(new Order()
                     {
                         Id = Utilities.SQL.MySqlReader.GetFieldValue<int>(0),
-                        OrderDate = Utilities.SQL.MySqlReader.GetFieldValue<ulong>(1),
+                        OrderDate = Utilities.Main.UnixTimeToDateTime(Utilities.SQL.MySqlReader.GetFieldValue<ulong>(1)),
                         TotalPrice = Utilities.SQL.MySqlReader.GetFieldValue<float>(2),
-                        OrderStatus = ostatus,
-                        OrderDeliveryType = dtp,
+                        OrderStatus = Utilities.SQL.MySqlReader.GetFieldValue<string>(3),
+                        OrderDeliveryType = Utilities.SQL.MySqlReader.GetFieldValue<string>(4),
                         Items = new List<OrderItem>()
                     });
                 }
                 Utilities.SQL.MySqlReader.Close();
             }
+
             foreach (var order in Orders)
             {
                 if (Utilities.SQL.ExecuteCommand("SELECT * FROM `order_item` WHERE order_id=" + order.Id, true) == Utilities.SQLResponse.Success)
@@ -63,8 +54,20 @@ namespace ShopDB.MVVM.ViewModels
                         });
                     }
                     Utilities.SQL.MySqlReader.Close();
+
+                    foreach (var item in order.Items)
+                    {
+                        if (Utilities.SQL.ExecuteCommand("SELECT * FROM `product` WHERE id=" + item.Id, true) != Utilities.SQLResponse.Success)
+                            continue;
+
+                        if (Utilities.SQL.MySqlReader.Read())
+                        {
+                            item.Name = Utilities.SQL.MySqlReader.GetFieldValue<string>(1);
+                        }
+                    }
                 }
             }
+
         }
         public OrdersViewModel()
         {

@@ -20,5 +20,16 @@ namespace ShopDB.Utilities
             }
             return hash;
         }
+
+        public static DateTime UnixTimeToDateTime(ulong unixtime)
+        {
+            if (unixtime == 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0);
+            return origin.AddSeconds(unixtime);
+        }
     }
 }

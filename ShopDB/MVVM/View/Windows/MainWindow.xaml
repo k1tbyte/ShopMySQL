@@ -259,7 +259,7 @@
                         </DockPanel>
                     </RadioButton>
 
-                    <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}">
+                    <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}" Command="{Binding OrdersCommand}">
                         <DockPanel Width="185">
                             <materialDesign:PackIcon Kind="ListBoxOutline" Width="24" Height="24"/>
                             <TextBlock Text="My orders" Style="{StaticResource MenuTextBlock}" />
