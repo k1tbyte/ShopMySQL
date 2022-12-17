@@ -21,6 +21,7 @@ namespace ShopDB.Models
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
+        public string DeliveryAdress { get; set; }
         public string OrderStatus { get; set; }
         public string OrderDeliveryType { get; set; }
         public List<OrderItem> Items { get; set; }
