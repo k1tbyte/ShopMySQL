@@ -76,17 +76,17 @@ namespace ShopDB.MVVM.ViewModels
                     string command = "";
                     if(product != null)
                     {
-                        product.Amount = Amount;
+                        /*product.Amount = Amount;
                         product.Price = Price;
                         product.Description = Description;
                         product.Name = Name;
-                        product.Image = Image;
+                        product.Image = Image;*/
                         command = $"UPDATE `product` SET `name` = '{Name.Replace("\'", "\\\'")}', `description` = '{Description.Replace("\'", "\\\'")}', `price` = '{Price}', `amount` = '{Amount}' WHERE `product`.`id` = {Id}";
                     }
                     else
                     {
                        var prods = (App.Current.MainWindow.DataContext as MainWindowViewModel).CatalogVM.Products;
-                        (App.Current.MainWindow.DataContext as MainWindowViewModel).CatalogVM.Products.Add(new Product
+                        /*(App.Current.MainWindow.DataContext as MainWindowViewModel).CatalogVM.Products.Add(new Product
                         {
                             Amount = Amount,
                             Price = Price,
@@ -95,7 +95,7 @@ namespace ShopDB.MVVM.ViewModels
                             Image = Image,
                             Id = prods[prods.Count-1].Id + 1
                         });
-
+                        */
                         command = $"INSERT INTO `product` (`id`, `name`, `description`, `price`, `amount`, `img_path`) VALUES (NULL,'{Name.Replace("\'", "\\\'")}','{Description.Replace("\'", "\\\'")}','{Price}','{Amount}','DefaultProductImg');";
                     }
 

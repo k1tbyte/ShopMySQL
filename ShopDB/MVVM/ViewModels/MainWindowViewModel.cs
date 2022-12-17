@@ -57,7 +57,8 @@ namespace ShopDB.MVVM.ViewModels
         public RelayCommand CatalogViewCommand { get; }
         public RelayCommand AddProductCommand  { get; }
         public RelayCommand LogoutCommand      { get; }
-        public RelayCommand OrdersCommand      { get; }
+        public RelayCommand OrdersViewCommand      { get; }
+        public RelayCommand CartViewCommand { get; }
 
         #endregion
 
@@ -75,11 +76,12 @@ namespace ShopDB.MVVM.ViewModels
 
         public readonly CatalogViewModel CatalogVM;
         public readonly OrdersViewModel OrdersVM;
-
+        public readonly CartViewModel CartVM;
         internal MainWindowViewModel()
         {
             CatalogVM = new CatalogViewModel();
             OrdersVM = new OrdersViewModel();
+            CartVM = new CartViewModel();
             CurrentView = CatalogVM;
 
             CloseAppCommand = new RelayCommand(o =>
@@ -97,25 +99,41 @@ namespace ShopDB.MVVM.ViewModels
                 WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             });
 
-            CatalogViewCommand = new RelayCommand(o =>
-            {
-                if (CurrentView != CatalogVM)
-                    CurrentView = CatalogVM;
-            });
-
             AddProductCommand = new RelayCommand(o =>
             {
                 if(Utilities.UI.OpenDialogWindow(new AddEditProductWindow()) == true)
                 {
-
+                    CatalogVM.UpdateCatalog();
+                }
+            });
+            #region Переключение вкладок
+            CatalogViewCommand = new RelayCommand(o =>
+            {
+                if (CurrentView != CatalogVM)
+                {
+                    CurrentView = CatalogVM;
+                    CatalogVM.UpdateCatalog(); 
                 }
             });
 
-            OrdersCommand = new RelayCommand(o =>
+            OrdersViewCommand = new RelayCommand(o =>
             {
                 if (CurrentView != OrdersVM)
+                {
                     CurrentView = OrdersVM;
+                    OrdersVM.UpdateOrders();
+                }
+                    
             });
+            CartViewCommand = new RelayCommand(o =>
+            {
+                if (CurrentView != CartVM)
+                {
+                    CurrentView = CartVM;
+                    CartVM.UpdateCart();
+                }   
+            });
+            #endregion
 
             LogoutCommand = new RelayCommand(o =>
             {

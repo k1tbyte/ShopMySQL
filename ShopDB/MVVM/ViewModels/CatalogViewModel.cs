@@ -24,13 +24,10 @@ namespace ShopDB.MVVM.ViewModels
         public RelayCommand RemoveProductCommand { get; private set; }
         public RelayCommand AddToCartCommand { get; private set; }
         public RelayCommand AddToWishlistCommand { get; private set; }
-
-
-        public CatalogViewModel()
+        public void UpdateCatalog()
         {
-            Products = new ObservableCollection<Product>();
-
-            if(Utilities.SQL.ExecuteCommand("SELECT * FROM `product`",true) == Utilities.SQLResponse.Success)
+            Products.Clear();
+            if (Utilities.SQL.ExecuteCommand("SELECT * FROM `product`", true) == Utilities.SQLResponse.Success)
             {
                 while (Utilities.SQL.MySqlReader.Read())
                 {
@@ -39,20 +36,26 @@ namespace ShopDB.MVVM.ViewModels
                         Id = Utilities.SQL.MySqlReader.GetFieldValue<int>(0),
                         Name = Utilities.SQL.MySqlReader.GetFieldValue<string>(1),
                         Description = Utilities.SQL.MySqlReader.GetFieldValue<string>(2),
-                        Price =  Utilities.SQL.MySqlReader.GetFieldValue<float>(3),
+                        Price = Utilities.SQL.MySqlReader.GetFieldValue<float>(3),
                         Amount = Utilities.SQL.MySqlReader.GetFieldValue<int>(4),
                         Image = $@"\Resources\Products\{Utilities.SQL.MySqlReader.GetFieldValue<string>(5)}.jpg",
                     });
                 }
                 Utilities.SQL.MySqlReader.Close();
             }
+        }
+
+        public CatalogViewModel()
+        {
+            Products = new ObservableCollection<Product>();
+            UpdateCatalog();
 
             EditProductComamnd = new RelayCommand(o =>
             {
                 var prod = o as Product;
                 if (Utilities.UI.OpenDialogWindow(new AddEditProductWindow(prod)) == true)
                 {
-                    Products[Products.IndexOf(prod)] = new Product()
+                    /*Products[Products.IndexOf(prod)] = new Product()
                     {
                         Amount = prod.Amount,
                         Description = prod.Description,
@@ -60,9 +63,9 @@ namespace ShopDB.MVVM.ViewModels
                         Image = prod.Image,
                         Name = prod.Name,
                         Price = prod.Price
-                    };
-                }
-                    
+                    };*/
+                    UpdateCatalog();
+                }   
             });
 
             RemoveProductCommand = new RelayCommand(o =>
@@ -70,12 +73,15 @@ namespace ShopDB.MVVM.ViewModels
                 var command = $"DELETE FROM `product` WHERE id = {(o as Product).Id}";
                 Utilities.SQL.ExecuteCommand(command);
                 Utilities.SQL.MySqlReader.Close();
-                Products.Remove(o as Product);
+                UpdateCatalog();
+                //Products.Remove(o as Product);
             });
 
             AddToCartCommand = new RelayCommand(o =>
             {
-                System.Windows.Forms.MessageBox.Show("Adding to cart");
+                var command = $"INSERT INTO `cart_item` (`id`, `user_id`, `quantity`, `product_id`) VALUES(NULL, '{MainWindowViewModel.AuthenticatedUser.Id}', '1', '{(o as Product).Id}')";
+                Utilities.SQL.ExecuteCommand(command);
+                Utilities.SQL.MySqlReader.Close();
             });
 
             AddToWishlistCommand = new RelayCommand(o =>

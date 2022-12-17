@@ -91,12 +91,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\LoggedUser.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="MVVM\ViewModels\AddEditProductViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\CartViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CatalogViewModel.cs" />
     <Compile Include="MVVM\ViewModels\OrdersViewModel.cs" />
+    <Compile Include="MVVM\View\Pages\CartView.xaml.cs">
+      <DependentUpon>CartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\Pages\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
     </Compile>
@@ -119,6 +124,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\VisiblityInvertedConverter.cs" />
+    <Page Include="MVVM\View\Pages\CartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\Pages\CatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

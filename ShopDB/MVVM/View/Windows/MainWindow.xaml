@@ -259,7 +259,7 @@
                         </DockPanel>
                     </RadioButton>
 
-                    <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}" Command="{Binding OrdersCommand}">
+                    <RadioButton x:Name="myProjectsButton" Style="{StaticResource MenuRadioButtonStyle}" Command="{Binding OrdersViewCommand}">
                         <DockPanel Width="185">
                             <materialDesign:PackIcon Kind="ListBoxOutline" Width="24" Height="24"/>
                             <TextBlock Text="My orders" Style="{StaticResource MenuTextBlock}" />
@@ -274,7 +274,7 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <RadioButton  Style="{StaticResource MenuRadioButtonStyle}">
+                    <RadioButton  Style="{StaticResource MenuRadioButtonStyle }" Command="{Binding CartViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="CartOutline" Width="24" Height="24"/>
                             <TextBlock Text="Cart" Style="{StaticResource MenuTextBlock}" />

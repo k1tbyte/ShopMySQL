@@ -20,8 +20,18 @@ namespace ShopDB.MVVM.ViewModels
             set => SetProperty(ref _orders, value);
         }
 
-        private void getOrders(string request)
+        public void UpdateOrders()
         {
+            Orders.Clear();
+            string request = "";
+            if (MainWindowViewModel.AuthenticatedUser.AcessLevel == AcessLevel.User)
+            {
+                request="SELECT * FROM `order_details` WHERE user_id=" + MainWindowViewModel.AuthenticatedUser.Id;
+            }
+            else if (MainWindowViewModel.AuthenticatedUser.AcessLevel == AcessLevel.Admin)
+            {
+                request = "SELECT * FROM `order_details`";
+            }
             if (Utilities.SQL.ExecuteCommand(request, true) == Utilities.SQLResponse.Success)
             {
                 while (Utilities.SQL.MySqlReader.Read())
@@ -30,7 +40,7 @@ namespace ShopDB.MVVM.ViewModels
                     {
                         Id = Utilities.SQL.MySqlReader.GetFieldValue<int>(0),
                         OrderDate = Utilities.Main.UnixTimeToDateTime(Utilities.SQL.MySqlReader.GetFieldValue<ulong>(1)),
-                        TotalPrice = Utilities.SQL.MySqlReader.GetFieldValue<float>(2),
+                        DeliveryAdress = Utilities.SQL.MySqlReader.GetFieldValue<string>(2),
                         OrderStatus = Utilities.SQL.MySqlReader.GetFieldValue<string>(3),
                         OrderDeliveryType = Utilities.SQL.MySqlReader.GetFieldValue<string>(4),
                         Items = new List<OrderItem>()
@@ -41,6 +51,7 @@ namespace ShopDB.MVVM.ViewModels
 
             foreach (var order in Orders)
             {
+                float total_price=0;
                 if (Utilities.SQL.ExecuteCommand("SELECT * FROM `order_item` WHERE order_id=" + order.Id, true) == Utilities.SQLResponse.Success)
                 {
                     while (Utilities.SQL.MySqlReader.Read())
@@ -52,9 +63,10 @@ namespace ShopDB.MVVM.ViewModels
                             Price = Utilities.SQL.MySqlReader.GetFieldValue<float>(2),
                             ProductId = Utilities.SQL.MySqlReader.GetFieldValue<int>(4)
                         });
+                        total_price += Utilities.SQL.MySqlReader.GetFieldValue<float>(2);
                     }
                     Utilities.SQL.MySqlReader.Close();
-
+                    order.TotalPrice=total_price;
                     foreach (var item in order.Items)
                     {
                         if (Utilities.SQL.ExecuteCommand("SELECT * FROM `product` WHERE id=" + item.Id, true) != Utilities.SQLResponse.Success)
@@ -72,16 +84,7 @@ namespace ShopDB.MVVM.ViewModels
         public OrdersViewModel()
         {
             Orders = new ObservableCollection<Order>();
-            if (MainWindowViewModel.AuthenticatedUser.AcessLevel == AcessLevel.User)
-            {
-                getOrders("SELECT * FROM `order_details` WHERE user_id="+ MainWindowViewModel.AuthenticatedUser.Id);
-            }
-            else if(MainWindowViewModel.AuthenticatedUser.AcessLevel == AcessLevel.Admin)
-            {
-                getOrders("SELECT * FROM `order_details`");
-
-            }
-            
+            UpdateOrders(); 
         }
 
     }
