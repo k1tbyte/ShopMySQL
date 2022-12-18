@@ -42,7 +42,13 @@ namespace ShopDB.MVVM.ViewModels
             Tprice=MakeOrderItemsVM.getTprice();
             ActionButtonCommand = new RelayCommand(o =>
             {
-/*                for (int i = 0; i < 1000; i++)
+                var deliveryType = String.IsNullOrWhiteSpace(Adress) ? "none" : "mail";
+                var command = $"INSERT INTO `order_details` (`id`, `order_date`, `address`, `status`,`delivery_type`,`user_id`)" +
+                $" VALUES(NULL, '{Utilities.Main.GetSystemUnixTime()}', '{(String.IsNullOrWhiteSpace(Adress) ? "NULL" : Adress)}', 'paid','{deliveryType}',{MainWindowViewModel.AuthenticatedUser.Id})";
+                Utilities.SQL.ExecuteCommand(command, false);
+/*             
+ *             
+ *             for (int i = 0; i < 1000; i++)
                 {
                     System.Windows.Forms.MessageBox.Show("Are you sure you want to buy goods?",
     "Confirmation", System.Windows.Forms.MessageBoxButtons.OKCancel);
