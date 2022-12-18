@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mdls="clr-namespace:ShopDB.MVVM.ViewModels">
 
     <Style x:Key="basicListBox" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
@@ -33,7 +34,7 @@
                     <MenuItem Header="Add to cart" Command="{Binding PlacementTarget.Tag.AddToCartCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               CommandParameter="{Binding}">
                     </MenuItem>
-                    <MenuItem Header="Edit" 
+                    <MenuItem Header="Edit"
                               Command="{Binding PlacementTarget.Tag.EditProductComamnd, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               CommandParameter="{Binding}"/>
                     <MenuItem Header="Remove" Command="{Binding PlacementTarget.Tag.RemoveProductCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
@@ -42,6 +43,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="cartBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource basicListBox}">
         <Setter Property="ContextMenu">
             <Setter.Value>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace ShopDB.MVVM.ViewModels
 {
@@ -41,7 +42,12 @@ namespace ShopDB.MVVM.ViewModels
             Tprice=MakeOrderItemsVM.getTprice();
             ActionButtonCommand = new RelayCommand(o =>
             {
-                (o as Window).DialogResult = true;
+/*                for (int i = 0; i < 1000; i++)
+                {
+                    System.Windows.Forms.MessageBox.Show("Are you sure you want to buy goods?",
+    "Confirmation", System.Windows.Forms.MessageBoxButtons.OKCancel);
+                }*/
+
             });
 
         }

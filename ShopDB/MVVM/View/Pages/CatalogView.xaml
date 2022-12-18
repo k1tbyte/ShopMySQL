@@ -9,15 +9,17 @@
              d:DataContext="{d:DesignInstance viewmodels:CatalogViewModel}"
              d:DesignHeight="550" d:DesignWidth="660">
     <Grid>
+        <Border x:Name="vis" Visibility="Collapsed"/>
         <ListBox x:Name="Catalog" ItemsSource="{Binding  Products,UpdateSourceTrigger=PropertyChanged}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       HorizontalAlignment="Left" 
                      Margin="9,10,0,10" Background="Transparent"
                      VirtualizingPanel.IsVirtualizing="True"  BorderThickness="0"
                      VirtualizingPanel.VirtualizationMode="Recycling"
-                     ItemContainerStyle="{StaticResource productBoxItem}">
+                     ItemContainerStyle="{StaticResource productBoxItem}"
+>
             <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
+                <ItemsPanelTemplate>    
                     <WrapPanel/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>

@@ -20,6 +20,11 @@ namespace ShopDB.MVVM.ViewModels
             set => SetProperty(ref _products, value);
         }
 
+        public Visibility Vis
+        {
+            get => Visibility.Collapsed;
+        }
+
         public RelayCommand EditProductComamnd { get; private set; }
         public RelayCommand RemoveProductCommand { get; private set; }
         public RelayCommand AddToCartCommand { get; private set; }
@@ -52,6 +57,7 @@ namespace ShopDB.MVVM.ViewModels
 
             EditProductComamnd = new RelayCommand(o =>
             {
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin) return;
                 var prod = o as Product;
                 if (Utilities.UI.OpenDialogWindow(new AddEditProductWindow(prod)) == true)
                 {
@@ -70,6 +76,7 @@ namespace ShopDB.MVVM.ViewModels
 
             RemoveProductCommand = new RelayCommand(o =>
             {
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin) return;
                 var command = $"DELETE FROM `product` WHERE id = {(o as Product).Id}";
                 Utilities.SQL.ExecuteCommand(command);
                 Utilities.SQL.MySqlReader.Close();

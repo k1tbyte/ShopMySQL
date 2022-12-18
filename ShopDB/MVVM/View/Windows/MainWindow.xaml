@@ -250,7 +250,8 @@
                             <materialDesign:PackIcon Kind="Inboxes" Width="24" Height="24"/>
                             <TextBlock Text="Catalog" Style="{StaticResource MenuTextBlock}" />
                             <Button Style="{StaticResource CircleButton}" HorizontalAlignment="Right" Command="{Binding AddProductCommand}"
-                                Width="22" Height="22" Background="{DynamicResource SecundaryBlueBrush}" >
+                                Width="22" Height="22" Background="{DynamicResource SecundaryBlueBrush}" 
+                                    Visibility="{Binding AuthenticatedUser.AcessLevel,Converter={StaticResource IntToBoolean}}">
                                 <materialDesign:PackIcon Kind="Plus" Width="18" Height="18" Foreground="{DynamicResource TertiaryBackgroundBrush}"/>
                                 <Button.Effect>
                                     <DropShadowEffect ShadowDepth="0"  Color="{DynamicResource PrimaryGlowColor}" BlurRadius="5"/>
