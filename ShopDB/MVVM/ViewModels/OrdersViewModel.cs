@@ -56,14 +56,15 @@ namespace ShopDB.MVVM.ViewModels
                 {
                     while (Utilities.SQL.MySqlReader.Read())
                     {
+                        var q = Utilities.SQL.MySqlReader.GetFieldValue<int>(1);
                         order.Items.Add(new OrderItem()
                         {
                             Id = Utilities.SQL.MySqlReader.GetFieldValue<int>(0),
-                            Quantity = Utilities.SQL.MySqlReader.GetFieldValue<int>(1),
+                            Quantity = q,
                             Price = Utilities.SQL.MySqlReader.GetFieldValue<float>(2),
                             ProductId = Utilities.SQL.MySqlReader.GetFieldValue<int>(4)
                         });
-                        total_price += Utilities.SQL.MySqlReader.GetFieldValue<float>(2);
+                        total_price += Utilities.SQL.MySqlReader.GetFieldValue<float>(2) * q;
                     }
                     Utilities.SQL.MySqlReader.Close();
                     order.TotalPrice=total_price;

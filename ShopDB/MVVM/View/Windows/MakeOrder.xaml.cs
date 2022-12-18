@@ -32,5 +32,6 @@ namespace ShopDB.MVVM.View.Windows
         {
             this.Close();
         }
+
     }
 }

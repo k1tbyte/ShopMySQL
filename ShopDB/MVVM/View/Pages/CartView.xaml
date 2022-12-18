@@ -12,7 +12,8 @@
         <TextBlock Text="Cart" Foreground="{DynamicResource SecundaryBlueBrush}" FontFamily="Poppins"
                    FontSize="25" Margin="12 8 0 8" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold"/>
 
-        <Button Margin="12 8 25 8" Width="130" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding FormOrderCommand}">Make an Order</Button>
+        <Button Margin="12 8 25 8" Width="130" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding FormOrderCommand}"
+                IsHitTestVisible="{Binding ElementName=Cart,Path=Items.Count,Converter={StaticResource IntToBoolean}}">Make an Order</Button>
         <Rectangle Width="645" Margin="10 41 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"
                    Height="1" Fill="#ffff" Opacity="0.8"/>
         

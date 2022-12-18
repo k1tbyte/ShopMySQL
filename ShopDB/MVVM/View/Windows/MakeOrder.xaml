@@ -59,7 +59,7 @@
                              Text="{Binding Adress}" IsHitTestVisible="{Binding ElementName=combo,Path=SelectedIndex,Converter={StaticResource IntToBoolean}}">
                     </TextBox>
                     <Button x:Name="actionBtton" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15"
-                        Content="Make an order" Command="{Binding ActionButtonCommand}"
+                        Content="Make an order" Command="{Binding ActionButtonCommand}" Click="Button_Click"
                         CommandParameter="{Binding ElementName=AddEditWindow}" Opacity="0.9"/>
                 </StackPanel>
                 

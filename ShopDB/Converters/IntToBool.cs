@@ -20,7 +20,7 @@ namespace ShopDB.Converters
 
             if (value is int vis)
             {
-                return vis == 1;
+                return vis >= 1;
             }
             return false;
         }
@@ -32,7 +32,7 @@ namespace ShopDB.Converters
 
             if (value is int vis)
             {
-                return vis == 1;
+                return vis >= 1;
             }
             return false;
         }
