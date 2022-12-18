@@ -152,6 +152,9 @@ namespace ShopDB.MVVM.View.Windows
 
             if(SQL.ExecuteCommand(insertCommand) == SQLResponse.Success & SQL.ExecuteCommand($"SELECT * FROM user WHERE login = '{loginField.Text}'", true) == SQLResponse.Success)
             {
+                if (!SQL.MySqlReader.Read())
+                    throw new ApplicationException();
+
                 MainWindowViewModel.AuthenticatedUser = new Models.LoggedUser()
                 {
                     AcessLevel =  Models.AcessLevel.User,

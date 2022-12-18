@@ -80,7 +80,7 @@ namespace ShopDB.MVVM.ViewModels
                     }
                     else
                     {
-                       var prods = (App.Current.MainWindow.DataContext as MainWindowViewModel).CatalogVM.Products;
+                       var prods = (App.MainWindow.DataContext as MainWindowViewModel).CatalogVM.Products;
                         command = $"INSERT INTO `product` (`id`, `name`, `description`, `price`, `amount`, `img_path`) VALUES (NULL,'{Name.Replace("\'", "\\\'")}','{Description.Replace("\'", "\\\'")}','{Price}','{Amount}','DefaultProductImg');";
                     }
 
