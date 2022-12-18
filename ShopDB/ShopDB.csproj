@@ -97,12 +97,17 @@
     <Compile Include="MVVM\ViewModels\AddEditProductViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CartViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CatalogViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MakeOrderItemsViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MakeOrderViewModel.cs" />
     <Compile Include="MVVM\ViewModels\OrdersViewModel.cs" />
     <Compile Include="MVVM\View\Pages\CartView.xaml.cs">
       <DependentUpon>CartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Pages\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Pages\MakeOrderItemsView.xaml.cs">
+      <DependentUpon>MakeOrderItemsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Pages\OrdersView.xaml.cs">
       <DependentUpon>OrdersView.xaml</DependentUpon>
@@ -112,6 +117,9 @@
     </Compile>
     <Compile Include="MVVM\View\Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Windows\MakeOrder.xaml.cs">
+      <DependentUpon>MakeOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Main.cs" />
     <Compile Include="Utilities\SQL.cs" />
@@ -128,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Pages\CatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Pages\MakeOrderItemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -150,6 +162,10 @@
     <Page Include="MVVM\View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Windows\MakeOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>

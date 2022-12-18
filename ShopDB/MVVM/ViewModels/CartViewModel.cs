@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ShopDB.MVVM.View.Windows;
 
 namespace ShopDB.MVVM.ViewModels
 {
@@ -24,6 +25,7 @@ namespace ShopDB.MVVM.ViewModels
         /*public RelayCommand AddQuantity { get; private set; }
         public RelayCommand LowerQuantity { get; private set; }*/
         public RelayCommand ChangeQuantity { get; private set; }
+
         public void UpdateCart() {
             CartProducts.Clear();
             if (Utilities.SQL.ExecuteCommand("SELECT cart_item.id,product.name,cart_item.quantity,product.description,product.price,product.img_path,cart_item.product_id" +
@@ -53,13 +55,29 @@ namespace ShopDB.MVVM.ViewModels
         {
             CartProducts = new ObservableCollection<Product>();
             UpdateCart();
-
-            //Не вызывается нигде
             RemoveFromCartCommand = new RelayCommand(o =>
             {
                 var command = $"DELETE FROM `cart_item` WHERE id = {(o as Product).Id}";
                 Utilities.SQL.ExecuteCommand(command);
                 Utilities.SQL.MySqlReader.Close();
+                UpdateCart();
+            });
+            FormOrderCommand = new RelayCommand(o =>
+            {
+                if(Utilities.UI.OpenDialogWindow(new MakeOrder()) == true)
+                {
+
+                }    
+                var command = "";
+                /*foreach (var cart_item in CartProducts)
+                {
+                    command = $"INSERT INTO `order_item` (`id`, `quantity`, `price`, `order_id`, `product_id`) VALUES(NULL, '{cart_item.Amount}', '{cart_item.Price}', '3', '{cart_item.Product_Id}');";
+                    Utilities.SQL.ExecuteCommand(command);
+                }
+                
+                command = $"DELETE FROM `cart_item`";
+                Utilities.SQL.ExecuteCommand(command);
+                Utilities.SQL.MySqlReader.Close();*/
                 UpdateCart();
             });
             /*ChangeQuantity = new RelayCommand(o =>

@@ -1,0 +1,66 @@
+﻿<Window x:Class="ShopDB.MVVM.View.Windows.MakeOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:ShopDB.MVVM.ViewModels" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ShopDB.MVVM.View.Windows"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Background="Transparent"
+        d:DataContext="{d:DesignInstance viewmodels:MakeOrderViewModel}"
+        WindowStyle="None"
+        Title="MakeOrder" Height="500" Width="440"
+        x:Name="MakeOrderWindow">
+    <Window.DataContext>
+        <viewmodels:MakeOrderViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Border Background="{DynamicResource PrimaryBackgroundBrush}" MouseDown="Border_MouseDown"
+                CornerRadius="5" BorderThickness="1.5" BorderBrush="{DynamicResource PrimaryBlueBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="Title" Text="Making order" FontSize="18" FontFamily="Poppins" Margin="15 7 0  0"
+                           Foreground="{DynamicResource PrimaryTextBrush}"/>
+                <Button Style="{StaticResource CircleButton}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 5 0"
+                        Click="Button_Click">
+                    <materialDesign:PackIcon Kind="Close" Foreground="{DynamicResource PrimaryTextBrush}"
+                                              Width="28" Height="28" Opacity="0.5"/>
+                </Button>
+
+                <Rectangle Fill="{DynamicResource SecundaryBackgroundBrush}" Margin="0 0 0 -5" Height="0.6" Opacity="0.7" RadiusY="2" RadiusX="2"
+                           Width="245" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Rectangle.Effect>
+                        <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.3"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+                <Border Margin="10,10,10,10" Grid.Row="1" 
+                    CornerRadius="10 10 10 10" Background="{DynamicResource SecundaryBackgroundBrush}" Opacity="1">
+                    <ContentControl Content="{Binding CurrentOrderView}" Margin="0,0,0,0">
+                        <ContentControl.CacheMode>
+                            <BitmapCache/>
+                        </ContentControl.CacheMode>
+                    </ContentControl>
+                </Border>
+                <StackPanel Grid.Row="2" Margin="10">
+                    <TextBlock Foreground="{Binding PrimaryTextBrush}" Text="Total price: " FontSize="14" FontFamily="Poppins" Width="414"/>
+                    <TextBlock Text="{Binding Tprice,StringFormat={}{0:#,# ₴}}" FontSize="14"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
+
+
+                    <TextBox materialDesign:HintAssist.Hint="Enter your adress" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="127"
+                             Text="{Binding Adress}"/>
+                    <Button x:Name="actionBtton" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15"
+                        Content="Make an order" Command="{Binding ActionButtonCommand}"
+                        CommandParameter="{Binding ElementName=AddEditWindow}" Opacity="0.9"/>
+                </StackPanel>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
