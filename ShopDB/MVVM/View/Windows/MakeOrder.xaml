@@ -22,19 +22,20 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="77*"/>
+                    <RowDefinition Height="39*"/>
+                    <RowDefinition Height="15*"/>
                 </Grid.RowDefinitions>
                 <TextBlock x:Name="Title" Text="Making order" FontSize="18" FontFamily="Poppins" Margin="15 7 0  0"
                            Foreground="{DynamicResource PrimaryTextBrush}"/>
-                <Button Style="{StaticResource CircleButton}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 5 0"
+                <Button Style="{StaticResource CircleButton}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="404,0,0,0"
                         Click="Button_Click">
                     <materialDesign:PackIcon Kind="Close" Foreground="{DynamicResource PrimaryTextBrush}"
                                               Width="28" Height="28" Opacity="0.5"/>
                 </Button>
 
-                <Rectangle Fill="{DynamicResource SecundaryBackgroundBrush}" Margin="0 0 0 -5" Height="0.6" Opacity="0.7" RadiusY="2" RadiusX="2"
-                           Width="245" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Rectangle Fill="{DynamicResource SecundaryBackgroundBrush}" Margin="0,4,0,0" Height="1" Opacity="0.7" RadiusY="2" RadiusX="2"
+                           Width="245" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1">
                     <Rectangle.Effect>
                         <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.3"/>
                     </Rectangle.Effect>
@@ -47,9 +48,10 @@
                         </ContentControl.CacheMode>
                     </ContentControl>
                 </Border>
-                <StackPanel Grid.Row="2" Margin="10">
+                <StackPanel Grid.Row="2" Margin="10,10,10,10" Grid.RowSpan="2">
                     <TextBlock Text="Total price: " FontSize="14" FontFamily="Poppins" Width="414"/>
-
+                    <TextBlock Text="{Binding Tprice,StringFormat={}{0:#,# ₴}}" FontSize="14"
+                                Background="Transparent" Foreground="{DynamicResource PrimaryBlueBrush}" FontFamily="Poppins"/>
                     <ComboBox x:Name="combo" SelectedIndex="0">
                         <ComboBoxItem  Content="Without delivery"/>
                         <ComboBoxItem Content="Home delivery"/>
@@ -58,11 +60,14 @@
                     <TextBox materialDesign:HintAssist.Hint="Enter your adress" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 0 0 10" MaxLength="127"
                              Text="{Binding Adress}" IsHitTestVisible="{Binding ElementName=combo,Path=SelectedIndex,Converter={StaticResource IntToBoolean}}">
                     </TextBox>
+                    <Button x:Name="accBtton" Height="20" Width="125" FontSize="10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0"
+                        Content="Adress from account" Command="{Binding AdressButtonCommand}" Opacity="0.9"/>
+
                     <Button x:Name="actionBtton" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15"
                         Content="Make an order" Command="{Binding ActionButtonCommand}" Click="Button_Click"
                         CommandParameter="{Binding ElementName=AddEditWindow}" Opacity="0.9"/>
                 </StackPanel>
-                
+
             </Grid>
         </Border>
     </Grid>

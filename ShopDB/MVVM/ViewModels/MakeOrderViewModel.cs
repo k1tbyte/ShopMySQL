@@ -33,6 +33,7 @@ namespace ShopDB.MVVM.ViewModels
         }
 
         public RelayCommand ActionButtonCommand { get; private set; }
+        public RelayCommand AdressButtonCommand { get; private set; }
 
         public readonly MakeOrderItemsViewModel MakeOrderItemsVM;
         public MakeOrderViewModel()
@@ -40,7 +41,14 @@ namespace ShopDB.MVVM.ViewModels
             MakeOrderItemsVM = new MakeOrderItemsViewModel();
             CurrentOrderView = MakeOrderItemsVM;
             Tprice=MakeOrderItemsVM.getTprice();
-
+            AdressButtonCommand = new RelayCommand(o =>
+            {
+                if (Utilities.SQL.ExecuteCommand($"SELECT * FROM `user` WHERE id = {MainWindowViewModel.AuthenticatedUser.Id};", true) == Utilities.SQLResponse.Success)
+                {
+                    if (Utilities.SQL.MySqlReader.Read())
+                        Adress = Utilities.SQL.MySqlReader.GetFieldValue<string>(6);
+                }   
+            });
             ActionButtonCommand = new RelayCommand(o =>
             {
                 var time = Utilities.Main.GetSystemUnixTime();

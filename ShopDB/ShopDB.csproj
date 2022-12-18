@@ -98,6 +98,7 @@
     <Compile Include="MVVM\ViewModels\AddEditProductViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CartViewModel.cs" />
     <Compile Include="MVVM\ViewModels\CatalogViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\ChangeOrderStatusViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MakeOrderItemsViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MakeOrderViewModel.cs" />
     <Compile Include="MVVM\ViewModels\OrdersViewModel.cs" />
@@ -118,6 +119,9 @@
     </Compile>
     <Compile Include="MVVM\View\Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Windows\ChangeOrderStatusWindow.xaml.cs">
+      <DependentUpon>ChangeOrderStatusWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Windows\MakeOrder.xaml.cs">
       <DependentUpon>MakeOrder.xaml</DependentUpon>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Windows\AuthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Windows\ChangeOrderStatusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

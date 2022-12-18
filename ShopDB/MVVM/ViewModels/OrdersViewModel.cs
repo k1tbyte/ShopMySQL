@@ -70,7 +70,7 @@ namespace ShopDB.MVVM.ViewModels
                     order.TotalPrice=total_price;
                     foreach (var item in order.Items)
                     {
-                        if (Utilities.SQL.ExecuteCommand("SELECT * FROM `product` WHERE id=" + item.Id, true) != Utilities.SQLResponse.Success)
+                        if (Utilities.SQL.ExecuteCommand("SELECT * FROM `product` WHERE id=" + item.ProductId, true) != Utilities.SQLResponse.Success)
                             continue;
 
                         if (Utilities.SQL.MySqlReader.Read())
@@ -82,10 +82,39 @@ namespace ShopDB.MVVM.ViewModels
             }
 
         }
+        public RelayCommand ChangeStatusCommand { get; private set; }
+        public RelayCommand RemoveOrderCommand { get; private set; }
         public OrdersViewModel()
         {
             Orders = new ObservableCollection<Order>();
-            UpdateOrders(); 
+            UpdateOrders();
+            ChangeStatusCommand = new RelayCommand(o =>
+            {
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin)
+                {
+                    System.Windows.Forms.MessageBox.Show("You dont have such permissions",
+                    "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return;
+                }
+                var order = o as Order;
+                Utilities.UI.OpenDialogWindow(new ChangeOrderStatusWindow(order));
+            });
+            RemoveOrderCommand = new RelayCommand(o =>
+            {
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin)
+                {
+                    System.Windows.Forms.MessageBox.Show("You dont have such permissions",
+                    "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return;
+                }
+                var command = "";
+                command = $"DELETE FROM `order_item` WHERE order_id = {(o as Order).Id}";
+                Utilities.SQL.ExecuteCommand(command);
+                command =$"DELETE FROM `order_details` WHERE id = {(o as Order).Id}";
+                Utilities.SQL.ExecuteCommand(command);
+                Utilities.SQL.MySqlReader.Close();
+                UpdateOrders();
+            });
         }
 
     }

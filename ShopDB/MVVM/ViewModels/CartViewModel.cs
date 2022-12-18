@@ -68,7 +68,7 @@ namespace ShopDB.MVVM.ViewModels
                 {
 
                 }    
-                var command = "";
+                
                 /*foreach (var cart_item in CartProducts)
                 {
                     command = $"INSERT INTO `order_item` (`id`, `quantity`, `price`, `order_id`, `product_id`) VALUES(NULL, '{cart_item.Amount}', '{cart_item.Price}', '3', '{cart_item.Product_Id}');";

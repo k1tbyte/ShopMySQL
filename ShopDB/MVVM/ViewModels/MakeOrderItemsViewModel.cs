@@ -19,7 +19,7 @@ namespace ShopDB.MVVM.ViewModels
             float price=0;
             foreach (var item in CartProducts)
             {
-                price += item.Price;
+                price += item.Price*item.Amount;
             }
             return price;
         }

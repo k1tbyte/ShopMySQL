@@ -57,7 +57,12 @@ namespace ShopDB.MVVM.ViewModels
 
             EditProductComamnd = new RelayCommand(o =>
             {
-                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin) return;
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin)
+                {
+                    System.Windows.Forms.MessageBox.Show("You dont have such permissions",
+                    "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return;
+                }
                 var prod = o as Product;
                 if (Utilities.UI.OpenDialogWindow(new AddEditProductWindow(prod)) == true)
                 {
@@ -76,12 +81,16 @@ namespace ShopDB.MVVM.ViewModels
 
             RemoveProductCommand = new RelayCommand(o =>
             {
-                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin) return;
+                if (MainWindowViewModel.AuthenticatedUser.AcessLevel != AcessLevel.Admin)
+                {
+                    System.Windows.Forms.MessageBox.Show("You dont have such permissions",
+                    "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return;
+                }
                 var command = $"DELETE FROM `product` WHERE id = {(o as Product).Id}";
                 Utilities.SQL.ExecuteCommand(command);
                 Utilities.SQL.MySqlReader.Close();
                 UpdateCatalog();
-                //Products.Remove(o as Product);
             });
 
             AddToCartCommand = new RelayCommand(o =>

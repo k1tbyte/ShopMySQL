@@ -44,6 +44,19 @@
         </Setter>
     </Style>
     
+    <Style x:Key="orderBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource basicListBox}">
+        <Setter Property="ContextMenu">
+            <Setter.Value>
+                <ContextMenu>
+                    <MenuItem Header="Change order status" Command="{Binding PlacementTarget.Tag. ChangeStatusCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                              CommandParameter="{Binding}"/>
+                    <MenuItem Header="Remove order" Command="{Binding PlacementTarget.Tag. RemoveOrderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                              CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="cartBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource basicListBox}">
         <Setter Property="ContextMenu">
             <Setter.Value>
